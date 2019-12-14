@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>カタモトの/dev/null</title>
-    <link>https://katamotokosuke.github.io/blog/</link>
+    <link>https://katamotokosuke.github.io/anyblog/</link>
     <description>Recent content on カタモトの/dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 14 Dec 2019 11:39:20 +0900</lastBuildDate>
     
-	<atom:link href="https://katamotokosuke.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://katamotokosuke.github.io/anyblog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>2019年振り返り(仕事編)</title>
-      <link>https://katamotokosuke.github.io/blog/posts/work-2019/</link>
+      <link>https://katamotokosuke.github.io/anyblog/posts/work-2019/</link>
       <pubDate>Sat, 14 Dec 2019 11:39:20 +0900</pubDate>
       
-      <guid>https://katamotokosuke.github.io/blog/posts/work-2019/</guid>
+      <guid>https://katamotokosuke.github.io/anyblog/posts/work-2019/</guid>
       <description>概要 他者に有益な情報を与えるわけではないですが、自分の備忘録として振り返り記事を書いておきます。
 今年良かったこと  運用(主に障害対応)ができるようになった インシデント数が少なかった 1個人として開発に参画するのではなく、主導権を取って開発できた 残業が(比較的)少なかった 給料が上がった  運用(主に障害対応)ができるようになった エンジニアはとてもざっくり分けて大きく3つの仕事があります。
  開発 運用 保守  開発が一番想像しやすいかなと思います。今この世界にないモノを実装してリリースする、というのがこれに該当します。 エンジニアのイメージ通りプログラムを書いたり、設計したりするのがお仕事です。 運用とは現在稼働中のサービスを安定稼働させるためにやるべきことをしたり、顧客(社内)からの要望に対してシステム面での突発的な対応をしたりします。 なので、プログラムを書くことは少なく、今目の前に直面しているシステム的課題を解決したり、データの抽出などを行ったりする業務がこれに該当します。 保守もシステムが安定稼働を目指すためにする業務です。じゃあ運用と何が違うのか。と言われそうですが、バグ対応だったり、あまり使い勝手がよくなさそうなところを改良するのがしばしば保守と言われています。 なので、プログラムを書くことも多いです。
@@ -37,10 +37,10 @@
     
     <item>
       <title>JSON Web Tokenを完全に理解する</title>
-      <link>https://katamotokosuke.github.io/blog/posts/jwt/</link>
+      <link>https://katamotokosuke.github.io/anyblog/posts/jwt/</link>
       <pubDate>Sun, 03 Feb 2019 22:07:02 +0900</pubDate>
       
-      <guid>https://katamotokosuke.github.io/blog/posts/jwt/</guid>
+      <guid>https://katamotokosuke.github.io/anyblog/posts/jwt/</guid>
       <description>JSON Web Tokenとは ざっくり言うと「2者間で安全にクレームを表現するための方式」です。RFC7519で技術仕様の標準化が行われています。JSON Web Token(以下JWT)は大きく分けて3つの属性に分割できます。ヘッダー、ペイロード、署名の3つです。ペイロードには実際に2者間(クライアント・サーバー間と考えると分かりやすいかもしれません)で受け渡しがしたいJSONが入り、ヘッダー、署名を使って改ざんの検証に用いられます。
 まだぼんやりしていて分かりにくいですが、各属性がどのようなものなのかもう少し具体的に見ていくことにします。その後、実際にどのように使っていくかを見ると理解はしやすくなります。
 ヘッダー属性 ヘッダーにはどのようなアルゴリズムを用いて署名を行っているかやトークンのタイプの2つで構成されています。
@@ -61,10 +61,10 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
     
     <item>
       <title>さよならQiita、こんにちはhugo × github pages</title>
-      <link>https://katamotokosuke.github.io/blog/posts/good-bye-qiita/</link>
+      <link>https://katamotokosuke.github.io/anyblog/posts/good-bye-qiita/</link>
       <pubDate>Sun, 03 Feb 2019 22:03:59 +0900</pubDate>
       
-      <guid>https://katamotokosuke.github.io/blog/posts/good-bye-qiita/</guid>
+      <guid>https://katamotokosuke.github.io/anyblog/posts/good-bye-qiita/</guid>
       <description>対象  Qiitaから脱したい Qiitaにはエモ記事が書けないので、そういった記事を独自のブログの方に書きたい  hugoとは https://gohugo.io/
 Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again. Hugoは人気のあるオープンソースの静的サイトジェネレータの1つである。 半端ないスピードと柔軟性で、Hugoは再びウェブサイトの構築を楽しくするぜ。
 と公式HPには書いてあります。
@@ -79,20 +79,20 @@ $ hugo new site site-demo &amp;amp;&amp;amp; cd site-demo なにやら生成さ�
     
     <item>
       <title>mysql 5.6~でのalter tableでやらかさない</title>
-      <link>https://katamotokosuke.github.io/blog/posts/mysql-alter-table/</link>
+      <link>https://katamotokosuke.github.io/anyblog/posts/mysql-alter-table/</link>
       <pubDate>Wed, 26 Dec 2018 22:05:25 +0900</pubDate>
       
-      <guid>https://katamotokosuke.github.io/blog/posts/mysql-alter-table/</guid>
+      <guid>https://katamotokosuke.github.io/anyblog/posts/mysql-alter-table/</guid>
       <description>はじめに mysql5.6の話をします。それ以上のバージョンでも通じる話ではあると思います。 どんなシステムでも本番稼働中にindexを貼りたい、テーブル定義(カラム名、型、並び順&amp;hellip;etc)の変更をしたいことは往々してあると思います。そんな時はalter tableコマンドを叩きたい気分になります。安直にコマンドをぶっ叩くとやらかしてしまう可能性があります。今後もやらかさないためにまとめておきます。
 環境 mysql&amp;gt; status; -------------- mysql Ver 14.14 Distrib 5.6.42, for Linux (x86_64) using EditLine wrapper Connection id:	3 Current database:	Current user:	root@localhost SSL:	Not in use Current pager:	stdout Using outfile:	&#39;&#39; Using delimiter:	; Server version:	5.6.42 MySQL Community Server (GPL) Protocol version:	10 Connection:	Localhost via UNIX socket Server characterset:	latin1 Db characterset:	latin1 Client characterset:	latin1 Conn. characterset:	latin1 UNIX socket:	/var/run/mysqld/mysqld.sock Uptime:	2 min 34 sec Threads: 2 Questions: 10 Slow queries: 0 Opens: 67 Flush tables: 1 Open tables: 60 Queries per second avg: 0.</description>
     </item>
     
     <item>
       <title>Railsのautoload_pathsでの定数探索</title>
-      <link>https://katamotokosuke.github.io/blog/posts/rails-autoload_path/</link>
+      <link>https://katamotokosuke.github.io/anyblog/posts/rails-autoload_path/</link>
       <pubDate>Tue, 25 Dec 2018 23:42:59 +0900</pubDate>
       
-      <guid>https://katamotokosuke.github.io/blog/posts/rails-autoload_path/</guid>
+      <guid>https://katamotokosuke.github.io/anyblog/posts/rails-autoload_path/</guid>
       <description>環境  Ruby 2.5.1 Rails 5.2.0  autoload_pathsの概要 例:
 class Hoge &amp;lt; SuperHoge; end のようにモデルを定義したとします。Hogeは未定義の場合定数作成され、定義済みであればオープンクラスされるためautoload_pathsの出番なしですが、SuperHogeのほうが未定義だった場合autoload_pathsを元に定数を探索しに行きます。 autoload_pathsがあるので
 require &amp;#39;super_hoge&amp;#39; といちいち書かなくてもよくなっています。
