@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on カタモトの/dev/null</title>
+    <link>https://katamotokosuke.github.io/blog/posts/</link>
+    <description>Recent content in Posts on カタモトの/dev/null</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Dec 2019 11:39:20 +0900</lastBuildDate>
+    
+	<atom:link href="https://katamotokosuke.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2019年振り返り(仕事編)</title>
+      <link>https://katamotokosuke.github.io/blog/posts/work-2019/</link>
+      <pubDate>Sat, 14 Dec 2019 11:39:20 +0900</pubDate>
+      
+      <guid>https://katamotokosuke.github.io/blog/posts/work-2019/</guid>
+      <description>概要 他者に有益な情報を与えるわけではないですが、自分の備忘録として振り返り記事を書いておきます。
+今年良かったこと  運用(主に障害対応)ができるようになった インシデント数が少なかった 1個人として開発に参画するのではなく、主導権を取って開発できた 残業が(比較的)少なかった 給料が上がった  運用(主に障害対応)ができるようになった エンジニアはとてもざっくり分けて大きく3つの仕事があります。
+ 開発 運用 保守  開発が一番想像しやすいかなと思います。今この世界にないモノを実装してリリースする、というのがこれに該当します。 エンジニアのイメージ通りプログラムを書いたり、設計したりするのがお仕事です。 運用とは現在稼働中のサービスを安定稼働させるためにやるべきことをしたり、顧客(社内)からの要望に対してシステム面での突発的な対応をしたりします。 なので、プログラムを書くことは少なく、今目の前に直面しているシステム的課題を解決したり、データの抽出などを行ったりする業務がこれに該当します。 保守もシステムが安定稼働を目指すためにする業務です。じゃあ運用と何が違うのか。と言われそうですが、バグ対応だったり、あまり使い勝手がよくなさそうなところを改良するのがしばしば保守と言われています。 なので、プログラムを書くことも多いです。
+この3つのうち「開発」と「保守」は経験済みでした。私の短いエンジニアキャリアの中では開発と運用、保守の割合は8:0:2くらいの比で業務をしていました。 組織の構造上開発と運用を別のチームになっているところも多く、私はたまたま開発をやっているチーム(組織)に所属している期間が多かったみたいです。 ですが、現在所属しているチームはこれらをすべて同一チームでやることになっているため、運用をやることになったのです。
+で、私がこの1年運用で特に頑張ったのは障害対応と呼ばれるところだと思っています。 システムはなぜか突然おかしくなってエラーを発生させたりするものです。この突発的な障害を検知した後、自動でリカバリできるものに関してはシステムが勝手にしますが、 それでも駄目な場合人間が実際にサーバーに入ったり、サーバー監視ツールを使って状況を確認し、復旧対応を行います。 そして厄介なことに障害というのは時間を選びません。深夜、休日にも障害を検知します。いや、参りましたね。
+本題ですが、この障害検知から復旧対応を今年はとても頑張りました。誰よりも早く気づき、復旧対応するというのを意識して動けたかなと思います。 深夜や休日に目をこすりながらPC画面に向かうのに慣れてしまいました。良くないですね。こういうのは疲弊するのでほどほどに頑張ることにします。 なにはともあれ、これで運用を経験できたのです。チームや会社が変わったとしてもこの経験はきっとどこかで活かされるでしょう。
+運用はまず原因を特定することがまず最初にやることですが、それを悠長にやっている時間も無いときがあるということを知りました。 そういうときは原因不明だがとりあえず障害を復旧することを第一優先、落ち着いたら原因理解という順番でも良いのだということに気がついてから、 迅速な対応ができるようになった気がします。
+インシデント数が少なかった ここはセンシティブな話も含まれるので詳細については省きます。 インシデントとして登録したのは1件でした。登録はしていない小さなやらかしはもう何回かあった気がします。 ここから言えることは、インシデント数が少ないということは安定して働けている可能性があるということです。
+1個人として開発に参画するのではなく、主導権を取って開発できた 正直ここが今年一番の収穫です。私はこれまで開発に参画するときは開発リーダー的ポジションの人の下で働くことか、一人で開発しているケースが多かったです。 ですが、今年は僕が案件の開発のイニシアチブを取れそうなポジションで働けました。 まぁ、周りは全員年上です。そういう面でなかなかやりにくいところはありましたが、それでも一定の成果は出せたのは自信になりました。
+次は
+ 議論を恐れない 開発物に対して自分が責任を持つ メンバーを信用する メンバーの様子をより可視化する  あたりを意識したいと思います。
+いやココだけの話、失敗できないなと思ったので休日にこっそり働いたなぁ。。。
+残業が少なかった 前職では朝の8時から夜の8、９時くらいまで働くが普通だったので、一日11~12h働いていました。(1h休憩) なので、一ヶ月20営業日だとすると60~80hの残業時間となります。それに土曜日もなぜか会社に行っていた日も多かったので、 それも含めると80~100hくらいにはなるかなと思います。これを多いと見るか少ないと見るかは議論しませんが、私はこのような働き方をしていました。 それが今年は20~45h以内収められることができたので、働き方革命の鑑と言っても良いのではないでしょうか！
+給料が上がった 今年良かった点で挙げた「1個人として開発に参画するのではなく、主導権を取って開発できた」の成果が良かったので、 給料が上がりました。前期後期どちらも上がったので申し分無いでしょう。 ただ自分で自分が成長したと感じられていないのが悲しいところではあります。これは虚構の成長なのではなかろうかと思うことがしばしばあります。
+今年悪かったところ ここからはBadポイントについて書きます。以下があまり良くなかったかなと思います。
+ 技術的チャレンジが少なかった インシデント数が少なかった 仕事へのモチベが(ずっと)低かった より能動的に動ける余地が残っていた  技術的チャレンジが少なかった 私はコンピューターサイエンス(以下 CS)が好きです。なので、CSの知識がそれなりに要求される仕事をしたかったのですが、 そのような仕事はなかったです。もちろんプログラムは書きますが、それは会社をサービスを成長させるために書くプログラムです。 仕事なので成果はあげるために働きます。ですが、ちょっと退屈でした。 贅沢なこと言ってしまいすみません。</description>
+    </item>
+    
+    <item>
+      <title>JSON Web Tokenを完全に理解する</title>
+      <link>https://katamotokosuke.github.io/blog/posts/jwt/</link>
+      <pubDate>Sun, 03 Feb 2019 22:07:02 +0900</pubDate>
+      
+      <guid>https://katamotokosuke.github.io/blog/posts/jwt/</guid>
+      <description>JSON Web Tokenとは ざっくり言うと「2者間で安全にクレームを表現するための方式」です。RFC7519で技術仕様の標準化が行われています。JSON Web Token(以下JWT)は大きく分けて3つの属性に分割できます。ヘッダー、ペイロード、署名の3つです。ペイロードには実際に2者間(クライアント・サーバー間と考えると分かりやすいかもしれません)で受け渡しがしたいJSONが入り、ヘッダー、署名を使って改ざんの検証に用いられます。
+まだぼんやりしていて分かりにくいですが、各属性がどのようなものなのかもう少し具体的に見ていくことにします。その後、実際にどのように使っていくかを見ると理解はしやすくなります。
+ヘッダー属性 ヘッダーにはどのようなアルゴリズムを用いて署名を行っているかやトークンのタイプの2つで構成されています。
+例：
+{ &amp;#34;alg&amp;#34;: &amp;#34;RS256&amp;#34;, &amp;#34;typ&amp;#34;: &amp;#34;JWT&amp;#34; } この文字列をbase64urlエンコードしたものがJWTのヘッダーとなります。プログラムっぽく書くならばこんな感じです。
+header = base64url_encode(&amp;#39;{&amp;#34;alg&amp;#34;:&amp;#34;RS256&amp;#34;,&amp;#34;typ&amp;#34;:&amp;#34;JWT&amp;#34;}&amp;#39;) ヘッダーに関しては以上です。とても単純な仕様ですね。
+ペイロード 実際に2者間で受け渡ししたい実体の入る属性です。要領はヘッダーと同じです。 例：
+{ &amp;#34;exp&amp;#34;: &amp;#34;1550905975&amp;#34;, &amp;#34;name&amp;#34;: &amp;#34;k_k_hogetaro&amp;#34;, &amp;#34;is_engineer&amp;#34;: true } ヘッダーと同じくペイロードもbase64urlエンコードしたものとなります。 ヘッダーと違う点を挙げるとするといくつか予約語が定義されています。上の例であるとexpは仕様で定められた予約のkeyとなります。その他の予約語は仕様書を参照してみてください。
+署名 ペイロード属性はbase64urlエンコードされているだけですので、このままだとデコードすれば中身を確認でき、改変できてしまいます。それだと困る場合がいろいろあります。例えばCookieの値とか。そこで署名を行い、改変の有無を検証可能なものにします。 ハッシュアルゴリズムHS256のケースを例とします。他のアルゴリズムのケースも後述します。 HS256は共通の秘密鍵で署名、検証を行います。
+プログラムのように書くと以下のようになります。
+value = header + &amp;#34;.&amp;#34; + payload + &amp;#34;.&amp;#34; # base64urlエンコード済みのヘッダーとペイロードを「.」で繋いだ形のものを用います。 signature = hash256(value, secret_key); これが署名のすべてです。
+JWTの完成形 これでJWTのすべてが揃いました。ヘッダー、ペイロード、そして署名です。これらを「.」で繋いだものがJWTとなります。
+JWT = &amp;#34;#{header}.#{payload}.#{signature}&amp;#34; JWTの使われ方 ↑まででJWTの具体的な形を見てきました。しかし、まだどのように使われるかが全くわかりません。なので、実際にどのような使われ方があるのか見ていきます。
+アルゴリズムHS256の場合 署名のところでもHS256は扱いましたが、共通の鍵を用いて署名と検証を行います。なので、以下のようなケースが想定されます。あくまで一例です。
+1, まず、どのサービスにでもあるようなログインを行います。利用可能ユーザーであればJWTを返却します 2, ユーザーはJWTを用いてサービスのAPIにアクセスします。 となります。2の検証ですが、署名部は秘密鍵を保有しているコンピューターにしか生成できません。そしてヘッダー、ペイロードが改変されていると、その署名と食い違いが発生するので、改変がわかる仕組みになっています。例えば次のJWTが発行されたとします。
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDJ9.UqRu8fGnUAmn-Z_wwsgGVNTXANkIiDdEbj-BdZRafks $ echo eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 | base64 -d {&amp;quot;alg&amp;quot;:&amp;quot;HS256&amp;quot;,&amp;quot;typ&amp;quot;:&amp;quot;JWT&amp;quot;} $ echo eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDJ9 | base64 -d {&amp;quot;sub&amp;quot;:&amp;quot;1234567890&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;John Doe&amp;quot;,&amp;quot;iat&amp;quot;:151623902} もしペイロードを</description>
+    </item>
+    
+    <item>
+      <title>さよならQiita、こんにちはhugo × github pages</title>
+      <link>https://katamotokosuke.github.io/blog/posts/good-bye-qiita/</link>
+      <pubDate>Sun, 03 Feb 2019 22:03:59 +0900</pubDate>
+      
+      <guid>https://katamotokosuke.github.io/blog/posts/good-bye-qiita/</guid>
+      <description>対象  Qiitaから脱したい Qiitaにはエモ記事が書けないので、そういった記事を独自のブログの方に書きたい  hugoとは https://gohugo.io/
+Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again. Hugoは人気のあるオープンソースの静的サイトジェネレータの1つである。 半端ないスピードと柔軟性で、Hugoは再びウェブサイトの構築を楽しくするぜ。
+と公式HPには書いてあります。
+インストール プラットフォームによってインストール方法が異なります。 Mac
+$ brew install hugo Win choco
+$ choco install hugo -confirm Win scoop
+$ scoop install hugo Linux snap
+$ snap install hugo などなど、、、。さまざまなPFに対応しています。 https://gohugo.io/getting-started/installing
+さっそくブログを作ってみる 雛形作成 雛形を作成するために以下のコマンドを実行します。
+$ hugo new site site-demo &amp;amp;&amp;amp; cd site-demo なにやら生成されたようです</description>
+    </item>
+    
+    <item>
+      <title>mysql 5.6~でのalter tableでやらかさない</title>
+      <link>https://katamotokosuke.github.io/blog/posts/mysql-alter-table/</link>
+      <pubDate>Wed, 26 Dec 2018 22:05:25 +0900</pubDate>
+      
+      <guid>https://katamotokosuke.github.io/blog/posts/mysql-alter-table/</guid>
+      <description>はじめに mysql5.6の話をします。それ以上のバージョンでも通じる話ではあると思います。 どんなシステムでも本番稼働中にindexを貼りたい、テーブル定義(カラム名、型、並び順&amp;hellip;etc)の変更をしたいことは往々してあると思います。そんな時はalter tableコマンドを叩きたい気分になります。安直にコマンドをぶっ叩くとやらかしてしまう可能性があります。今後もやらかさないためにまとめておきます。
+環境 mysql&amp;gt; status; -------------- mysql Ver 14.14 Distrib 5.6.42, for Linux (x86_64) using EditLine wrapper Connection id:	3 Current database:	Current user:	root@localhost SSL:	Not in use Current pager:	stdout Using outfile:	&#39;&#39; Using delimiter:	; Server version:	5.6.42 MySQL Community Server (GPL) Protocol version:	10 Connection:	Localhost via UNIX socket Server characterset:	latin1 Db characterset:	latin1 Client characterset:	latin1 Conn. characterset:	latin1 UNIX socket:	/var/run/mysqld/mysqld.sock Uptime:	2 min 34 sec Threads: 2 Questions: 10 Slow queries: 0 Opens: 67 Flush tables: 1 Open tables: 60 Queries per second avg: 0.</description>
+    </item>
+    
+    <item>
+      <title>Railsのautoload_pathsでの定数探索</title>
+      <link>https://katamotokosuke.github.io/blog/posts/rails-autoload_path/</link>
+      <pubDate>Tue, 25 Dec 2018 23:42:59 +0900</pubDate>
+      
+      <guid>https://katamotokosuke.github.io/blog/posts/rails-autoload_path/</guid>
+      <description>環境  Ruby 2.5.1 Rails 5.2.0  autoload_pathsの概要 例:
+class Hoge &amp;lt; SuperHoge; end のようにモデルを定義したとします。Hogeは未定義の場合定数作成され、定義済みであればオープンクラスされるためautoload_pathsの出番なしですが、SuperHogeのほうが未定義だった場合autoload_pathsを元に定数を探索しに行きます。 autoload_pathsがあるので
+require &amp;#39;super_hoge&amp;#39; といちいち書かなくてもよくなっています。
+puts ActiveSupport::Dependencies.autoload_paths RAILS_ROOT/app/assets RAILS_ROOT/app/channels RAILS_ROOT/app/controllers RAILS_ROOT/app/controllers/concerns RAILS_ROOT/app/helpers RAILS_ROOT/app/jobs RAILS_ROOT/app/mailers RAILS_ROOT/app/models RAILS_ROOT/app/models/concerns ...etc みたいにActiveSupport::Dependencies.autoload_pathsの結果が探索の対象になります。 詳しくはwebで(https://railsguides.jp/autoloading_and_reloading_constants.html)
+実際のソースコードを見てみる rubyにはさまざまなフックメソッドが提供されていてその一つに定数が見つからないときにModule#const_missingというものがあります。これをActiveSupport::Dependencies::ModuleConstMissingではオーバーライドしています。このmoduleはrubyのModuleにincludeされているのでRailsを使う際に定数が見つからないとこのメソッドのconst_missingが呼ばれることになります。なのでこれを見ていくことにします。
+https://github.com/rails/rails/blob/5-2-0/activesupport/lib/active_support/dependencies.rb#L191
+def const_missing(const_name) from_mod = anonymous? ? guess_for_anonymous(const_name) : self Dependencies.load_missing_constant(from_mod, const_name) end from_modはどの名前空間に属するかを特定しています。そして定数探索の旅が始まる！
+ActiveSupport::Dependencies#load_missing_constant https://github.com/rails/rails/blob/master/activesupport/lib/active_support/dependencies.rb#L489
+2018/05/23時点のソースをのせる。
+def load_missing_constant(from_mod, const_name) unless qualified_const_defined?(from_mod.name) &amp;amp;&amp;amp; Inflector.constantize(from_mod.name).equal?(from_mod) raise ArgumentError, &amp;#34;A copy of #{from_mod}has been removed from the module tree but is still active!</description>
+    </item>
+    
+  </channel>
+</rss>

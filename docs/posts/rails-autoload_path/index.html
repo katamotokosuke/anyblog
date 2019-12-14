@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://katamotokosuke.github.io/blog/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://katamotokosuke.github.io/blog/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://katamotokosuke.github.io/blog/images/favicon-16x16.png">
+    <link rel="manifest" href="https://katamotokosuke.github.io/blog/images/site.webmanifest">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Railsのautoload_pathsでの定数探索 | カタモトの/dev/null</title>
+    <link rel="stylesheet" href="https://katamotokosuke.github.io/blog/css/style.css" />
+    <link rel="stylesheet" href="https://katamotokosuke.github.io/blog/css/fonts.css" />
+    
+    <header>
+
+  <nav>
+    <ul>
+      
+      
+      <li class="pull-left ">
+        <a href="https://katamotokosuke.github.io/blog">~/カタモトの/dev/null</a>
+      </li>
+      
+
+      
+
+    </ul>
+  </nav>
+</header>
+
+  </head>
+
+  <body>
+    <br/>
+
+<div class="article-meta">
+<h1><span class="title">Railsのautoload_pathsでの定数探索</span></h1>
+
+<h2 class="date">2018/12/25</h2>
+<p class="terms">
+  
+  
+  
+  
+  
+</p>
+</div>
+
+
+<div class="content-wrapper">
+  <main>
+    <h1 id="heading">環境</h1>
+<ul>
+<li>Ruby 2.5.1</li>
+<li>Rails 5.2.0</li>
+</ul>
+<h1 id="autoload-paths">autoload_pathsの概要</h1>
+<p>例:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Hoge</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">SuperHoge</span>; <span style="color:#66d9ef">end</span>
+</code></pre></div><p>のようにモデルを定義したとします。Hogeは未定義の場合定数作成され、定義済みであればオープンクラスされるためautoload_pathsの出番なしですが、SuperHogeのほうが未定義だった場合<code>autoload_paths</code>を元に定数を探索しに行きます。
+<code>autoload_paths</code>があるので</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;super_hoge&#39;</span>
+</code></pre></div><p>といちいち書かなくてもよくなっています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">puts <span style="color:#66d9ef">ActiveSupport</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Dependencies</span><span style="color:#f92672">.</span>autoload_paths
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>assets
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>channels
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>controllers
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>controllers<span style="color:#f92672">/</span>concerns
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>helpers
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>jobs
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>mailers
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>models
+<span style="color:#66d9ef">RAILS_ROOT</span><span style="color:#f92672">/</span>app<span style="color:#f92672">/</span>models<span style="color:#f92672">/</span>concerns
+<span style="color:#f92672">...</span>etc
+</code></pre></div><p>みたいにActiveSupport::Dependencies.autoload_pathsの結果が探索の対象になります。
+詳しくはwebで(<a href="https://railsguides.jp/autoloading_and_reloading_constants.html">https://railsguides.jp/autoloading_and_reloading_constants.html</a>)</p>
+<h1 id="heading-1">実際のソースコードを見てみる</h1>
+<p>rubyにはさまざまなフックメソッドが提供されていてその一つに定数が見つからないときに<code>Module#const_missing</code>というものがあります。これを<code>ActiveSupport::Dependencies::ModuleConstMissing</code>ではオーバーライドしています。このmoduleはrubyの<code>Module</code>に<code>include</code>されているのでRailsを使う際に定数が見つからないとこのメソッドのconst_missingが呼ばれることになります。なのでこれを見ていくことにします。</p>
+<p><a href="https://github.com/rails/rails/blob/5-2-0/activesupport/lib/active_support/dependencies.rb#L191">https://github.com/rails/rails/blob/5-2-0/activesupport/lib/active_support/dependencies.rb#L191</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">const_missing</span>(const_name)
+  from_mod <span style="color:#f92672">=</span> anonymous? ? guess_for_anonymous(const_name) : self
+  <span style="color:#66d9ef">Dependencies</span><span style="color:#f92672">.</span>load_missing_constant(from_mod, const_name)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>from_modはどの名前空間に属するかを特定しています。そして定数探索の旅が始まる！</p>
+<h1 id="activesupportdependenciesload-missing-constant">ActiveSupport::Dependencies#load_missing_constant</h1>
+<p><a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/dependencies.rb#L489">https://github.com/rails/rails/blob/master/activesupport/lib/active_support/dependencies.rb#L489</a></p>
+<p>2018/05/23時点のソースをのせる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">load_missing_constant</span>(from_mod, const_name)
+      <span style="color:#66d9ef">unless</span> qualified_const_defined?(from_mod<span style="color:#f92672">.</span>name) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">Inflector</span><span style="color:#f92672">.</span>constantize(from_mod<span style="color:#f92672">.</span>name)<span style="color:#f92672">.</span>equal?(from_mod)
+        <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">ArgumentError</span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">A copy of </span><span style="color:#e6db74">#{</span>from_mod<span style="color:#e6db74">}</span><span style="color:#e6db74"> has been removed from the module tree but is still active!</span><span style="color:#e6db74">&#34;</span>
+      <span style="color:#66d9ef">end</span>
+
+      qualified_name <span style="color:#f92672">=</span> qualified_name_for from_mod, const_name
+      path_suffix <span style="color:#f92672">=</span> qualified_name<span style="color:#f92672">.</span>underscore
+
+      file_path <span style="color:#f92672">=</span> search_for_file(path_suffix)
+
+      <span style="color:#66d9ef">if</span> file_path
+        expanded <span style="color:#f92672">=</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>expand_path(file_path)
+        expanded<span style="color:#f92672">.</span>sub!(<span style="color:#e6db74">/</span><span style="color:#e6db74">\</span><span style="color:#e6db74">.rb</span><span style="color:#e6db74">\</span><span style="color:#e6db74">z</span><span style="color:#e6db74">/</span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>freeze)
+
+        <span style="color:#66d9ef">if</span> loading<span style="color:#f92672">.</span>include?(expanded)
+          <span style="color:#66d9ef">raise</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Circular dependency detected while autoloading constant </span><span style="color:#e6db74">#{</span>qualified_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#66d9ef">else</span>
+          require_or_load(expanded, qualified_name)
+          <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">LoadError</span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Unable to autoload constant </span><span style="color:#e6db74">#{</span>qualified_name<span style="color:#e6db74">}</span><span style="color:#e6db74">, expected </span><span style="color:#e6db74">#{</span>file_path<span style="color:#e6db74">}</span><span style="color:#e6db74"> to define it</span><span style="color:#e6db74">&#34;</span> <span style="color:#66d9ef">unless</span> from_mod<span style="color:#f92672">.</span>const_defined?(const_name, <span style="color:#66d9ef">false</span>)
+          <span style="color:#66d9ef">return</span> from_mod<span style="color:#f92672">.</span>const_get(const_name)
+        <span style="color:#66d9ef">end</span>
+      <span style="color:#66d9ef">elsif</span> mod <span style="color:#f92672">=</span> autoload_module!(from_mod, const_name, qualified_name, path_suffix)
+        <span style="color:#66d9ef">return</span> mod
+      <span style="color:#66d9ef">elsif</span> (parent <span style="color:#f92672">=</span> from_mod<span style="color:#f92672">.</span>parent) <span style="color:#f92672">&amp;&amp;</span> parent <span style="color:#f92672">!=</span> from_mod <span style="color:#f92672">&amp;&amp;</span>
+            <span style="color:#f92672">!</span> from_mod<span style="color:#f92672">.</span>parents<span style="color:#f92672">.</span>any? { <span style="color:#f92672">|</span>p<span style="color:#f92672">|</span> p<span style="color:#f92672">.</span>const_defined?(const_name, <span style="color:#66d9ef">false</span>) }
+        <span style="color:#66d9ef">begin</span>
+          <span style="color:#66d9ef">return</span> parent<span style="color:#f92672">.</span>const_missing(const_name)
+        <span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">NameError</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> e
+          <span style="color:#66d9ef">raise</span> <span style="color:#66d9ef">unless</span> e<span style="color:#f92672">.</span>missing_name? qualified_name_for(parent, const_name)
+        <span style="color:#66d9ef">end</span>
+      <span style="color:#66d9ef">end</span>
+</code></pre></div><p>上から適当に見ていくと<code>qualified_name_for</code>で<code>Hoge::Fuga::Bar</code>のような文字列取得して、<code>underscore</code>で<code>hoge/fuga/bar</code>のような文字列を生成しています。それを<code>search_for_file</code>(あとでみる)でファイルを探しています。
+その絶対パスを取得して、<code>require_or_load</code>を呼びだして定数をrequireかロードし、その後そのmoduleがreturnされます。</p>
+<p>もしsearch_for_fileの返り値がなければ<code>autoload_module</code>を呼び出す。
+<code>autoload_module</code>は &ndash;&gt; 予想されるパスサフィックスに一致するディレクトリを検索して、提供されたモジュール名を自動ロードしようとします。 見つかった場合、モジュールは作成され、+ const_name +という名前の定数に+ from_mod +の定数に代入されます。 ディレクトリが再ロード可能なベースパスからロードされていれば、アンロードされる定数セットに追加されます。</p>
+<p>らしいです。何かしらが代入されて場合、そのmoduleを返します。あとは例外処理なので省略。</p>
+<h1 id="search-for-file"><code>search_for_file</code>を読む</h1>
+<p><a href="https://github.com/rails/rails/blob/5-2-0/activesupport/lib/active_support/dependencies.rb#L414">https://github.com/rails/rails/blob/5-2-0/activesupport/lib/active_support/dependencies.rb#L414</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e"></span><span style="color:#f92672"></span><span style="color:#a6e22e">search_for_file</span>(path_suffix)
+  path_suffix <span style="color:#f92672">=</span> path_suffix<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">/</span><span style="color:#e6db74">(</span><span style="color:#e6db74">\</span><span style="color:#e6db74">.rb)?$</span><span style="color:#e6db74">/</span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">.rb</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>freeze)
+  autoload_paths<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>root<span style="color:#f92672">|</span>
+    path <span style="color:#f92672">=</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>join(root, path_suffix)
+    <span style="color:#66d9ef">return</span> path <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>file? path
+  <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">nil</span>
+<span style="color:#66d9ef">end</span>
+
+</code></pre></div><p>やっと出現しました<code>autoload_paths</code>。
+実装は単純で、<code>autoload_paths</code>をぶん回して<code>path_suffix</code>(探索対象のモジュールの名前空間に対応するファイルパス)と各要素を結合します。それがファイルならばその文字列を返します。</p>
+<h1 id="heading-2">まとめ</h1>
+<p>支離滅裂に書いてきたが、<code>ActiveSupport::Dependencies::ModuleConstMissing#const_missing</code>では未定義の定数をautoload_pathsをもとに読み込んでいます。</p>
+
+    <a href="https://katamotokosuke.github.io/blog/"> >> Home</a>
+  </main>
+</div>
+    <footer>
+      
+<script>
+(function() {
+  function center_el(tagName) {
+    var tags = document.getElementsByTagName(tagName), i, tag;
+    for (i = 0; i < tags.length; i++) {
+      tag = tags[i];
+      var parent = tag.parentElement;
+      
+      if (parent.childNodes.length === 1) {
+        
+        if (parent.nodeName === 'A') {
+          parent = parent.parentElement;
+          if (parent.childNodes.length != 1) continue;
+        }
+        if (parent.nodeName === 'P') parent.style.textAlign = 'center';
+      }
+    }
+  }
+  var tagNames = ['img', 'embed', 'object'];
+  for (var i = 0; i < tagNames.length; i++) {
+    center_el(tagNames[i]);
+  }
+})();
+</script>
+
+      
+    </footer>
+  </body>
+</html>
+

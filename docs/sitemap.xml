@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/posts/work-2019/</loc>
+    <lastmod>2019-12-14T11:39:20+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/posts/</loc>
+    <lastmod>2019-12-14T11:39:20+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/</loc>
+    <lastmod>2019-12-14T11:39:20+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/posts/jwt/</loc>
+    <lastmod>2019-02-03T22:07:02+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/posts/good-bye-qiita/</loc>
+    <lastmod>2019-02-03T22:03:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/posts/mysql-alter-table/</loc>
+    <lastmod>2018-12-26T22:05:25+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/posts/rails-autoload_path/</loc>
+    <lastmod>2018-12-25T23:42:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://katamotokosuke.github.io/blog/tags/</loc>
+  </url>
+  
+</urlset>
