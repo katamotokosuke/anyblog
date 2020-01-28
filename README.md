@@ -2,7 +2,7 @@
 
 1, Markdownのファイルを生成
 ```bash
-hugo new post/#{title}.md
+hugo new content/post/#{title}.md
 ```
 
 2, 記事を書く

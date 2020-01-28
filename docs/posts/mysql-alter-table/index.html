@@ -55,10 +55,10 @@
 
 <div class="content-wrapper">
   <main>
-    <h1 id="heading">はじめに</h1>
+    <h1 id="はじめに">はじめに</h1>
 <p>mysql5.6の話をします。それ以上のバージョンでも通じる話ではあると思います。
 どんなシステムでも本番稼働中にindexを貼りたい、テーブル定義(カラム名、型、並び順&hellip;etc)の変更をしたいことは往々してあると思います。そんな時は<code>alter table</code>コマンドを叩きたい気分になります。安直にコマンドをぶっ叩くとやらかしてしまう可能性があります。今後もやらかさないためにまとめておきます。</p>
-<h1 id="heading-1">環境</h1>
+<h1 id="環境">環境</h1>
 <pre><code>mysql&gt; status;
 --------------
 mysql  Ver 14.14 Distrib 5.6.42, for Linux (x86_64) using  EditLine wrapper
@@ -82,13 +82,13 @@ Uptime:			2 min 34 sec
 
 Threads: 2  Questions: 10  Slow queries: 0  Opens: 67  Flush tables: 1  Open tables: 60  Queries per second avg: 0.064
 --------------
-</code></pre><h1 id="56">5.6で追加されたやらかさない技術</h1>
+</code></pre><h1 id="56で追加されたやらかさない技術">5.6で追加されたやらかさない技術</h1>
 <p>結論から言うとonline DDLと呼ばれる機能です。これは2つの要素から成り立っています。</p>
 <ol>
 <li>高速index作成(こちらは5.5から存在する)</li>
 <li>alter table実行中にDML処理が可能にする拡張</li>
 </ol>
-<h2 id="index">高速index作成とは</h2>
+<h2 id="高速index作成とは">高速index作成とは</h2>
 <p>すでに書きましたが5.5からある機能ではあります。
 そもそも<code>alter table</code>は結構忙しい処理です。ざっくり言うと</p>
 <ol>
@@ -99,18 +99,18 @@ Threads: 2  Questions: 10  Slow queries: 0  Opens: 67  Flush tables: 1  Open tab
 </ol>
 <p>このような手順を踏んでいます。</p>
 <p>セカンダリインデックスのadd dropに関してはテーブルコピーのようなことをせずに速度に最適化が行われています。</p>
-<h2 id="dml">DMLの実行が可能とは</h2>
+<h2 id="dmlの実行が可能とは">DMLの実行が可能とは</h2>
 <p>ざっくり言うと以前まではread(SELECT)は可能ですが、write(INSERT, UPDATE, DELETE)をブロックされていたのがどちらもブロックされなくなったということです。
 とはいえすべてができるようになったわけではありません。詳しくはドキュメントを参照してみてください。 <a href="https://dev.mysql.com/doc/refman/5.6/ja/innodb-create-index-overview.html">https://dev.mysql.com/doc/refman/5.6/ja/innodb-create-index-overview.html</a></p>
-<h2 id="heading-2">というわけで</h2>
+<h2 id="というわけで">というわけで</h2>
 <p>online DDLがあるとメンテモードにせずにDMLをぶっ叩くことができるようになるということです。しかしwriteブロックする場合もあるのでそちらは依然として注意が必要です。</p>
-<h1 id="heading-3">やらかす事象</h1>
+<h1 id="やらかす事象">やらかす事象</h1>
 <p>とはいえonline DDLがあったとしてもやらかす時はやらかします。例えば実行時間の長いtransaction中のプロセスがある平気でやらかします。なぜかと言うとmysqlにはメタデータのロックという機構があり、それにより<code>alter table</code>がロックされて解放するまで待ちの状態になり、その後のDMLコマンドも待ち状態になって事故ってしまうケースがあります。</p>
-<h2 id="heading-4">メタデータのロック？？</h2>
+<h2 id="メタデータのロック">メタデータのロック？？</h2>
 <p>主な目的としてはデータの一貫性を確保するためです。
 明示、暗黙的問わず開始されたトランザクションはメタデータロックを保持し、利用されてるテーブルに対してDDLを実行を禁止します。 またこれはトランザクション終了まで保持されます。　
 詳しくは: <a href="https://dev.mysql.com/doc/refman/5.6/ja/metadata-locking.html">https://dev.mysql.com/doc/refman/5.6/ja/metadata-locking.html</a></p>
-<h2 id="heading-5">試す</h2>
+<h2 id="試す">試す</h2>
 <p>実際にメタデータロックを意図的に起こしてみたいと思います。
 とりあえずmysqlが動く環境を作りましょう。</p>
 <pre><code>$ docker pull mysql:5.6.42
@@ -148,7 +148,7 @@ Threads: 2  Questions: 10  Slow queries: 0  Opens: 67  Flush tables: 1  Open tab
 3 rows in set (0.00 sec)
 
 </code></pre><p>ついにきました。Waiting for table metadata lock。 これが本番で発生するとすみません状態になります。</p>
-<h1 id="heading-6">まとめ</h1>
+<h1 id="まとめ">まとめ</h1>
 <p>mysql5.6からonline DDLによってindexをサービスインさせたまま貼ることができて便利です。
 とはいえindexを貼る時も長いトランザクションがあったりする時は気をつけましょう。
 また、今回やらかす事象にメタデータロックだけを取り上げましたが、もちろん他にもたくさんあると思います。実際にこんなのにハマりましたみたいなのがあればぜひ教えていただきたいです。</p>
