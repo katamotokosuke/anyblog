@@ -85,7 +85,7 @@
 HS256は共通の秘密鍵で署名、検証を行います。</p>
 <p>プログラムのように書くと以下のようになります。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">
-value <span style="color:#f92672">=</span> header <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">.</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> payload <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">.</span><span style="color:#e6db74">&#34;</span> <span style="color:#75715e"># base64urlエンコード済みのヘッダーとペイロードを「.」で繋いだ形のものを用います。</span>
+value <span style="color:#f92672">=</span> header <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> payload <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#75715e"># base64urlエンコード済みのヘッダーとペイロードを「.」で繋いだ形のものを用います。</span>
 signature <span style="color:#f92672">=</span> hash256(value, secret_key);
 </code></pre></div><p>これが署名のすべてです。</p>
 <h2 id="jwtの完成形">JWTの完成形</h2>

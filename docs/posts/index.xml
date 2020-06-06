@@ -6,10 +6,24 @@
     <description>Recent content in Posts on カタモトの/dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jan 2020 22:05:25 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2020 14:02:16 +0900</lastBuildDate>
     
 	<atom:link href="https://katamotokosuke.github.io/anyblog/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>初めてのファンダメンタル分析 - Zホールディングス編</title>
+      <link>https://katamotokosuke.github.io/anyblog/posts/fundamental-zhd/</link>
+      <pubDate>Sat, 06 Jun 2020 14:02:16 +0900</pubDate>
+      
+      <guid>https://katamotokosuke.github.io/anyblog/posts/fundamental-zhd/</guid>
+      <description>概要 銘柄は2020年6月時点で私が在籍している会社の親会社にあたるZホールディングス(4689)(以下ZHD)を対象とします。 この情報を参考に投資の判断は構わないですが、自己責任でよろしくおねがいします。
+ここでの銘柄分析は例えば営業利益の内訳の詳細を分析するのはなく、 四季報レベルで取得可能なざっくりとした情報からZHDが投資に値する銘柄かどうかのジャッジをするという感じです。 それでは見ていきましょう。
+業績 過去3年間の業績を下記のように推移しています。 引用: https://shikiho.jp/stocks/4689
+   決算期 売上高 営業利益 経常利益 純利益     2017/3 853,730 192,049 193,475 136,589   2018/3 897,185 185,810 193,177 131,153   2019/3 954,714 140,528 123,370 78,677   2020/3 1,052,943 152,276 135,676 81,675   ※単位は百万円        売上高は年々上がっていて、2020年には1兆を初めて超えたらしいです。 一社員としては嬉しい限りですね。どこの部に所属しているかは控えておきますが、 日々、取扱高(ここでいう売上高)を上げるために必死に仕事をしている偉い人たちを見たり、私自身もそれを達成すべく働いているので、桁が上がったのは感慨深いものがあります。(なお、在籍期間は2年弱) しかし営業利益、経常利益、純利益ともに成長は鈍化しているみたいですね。 zozoのTOBしたり、PayPay垂直立ち上げと積極的に事業投資を実施しているからでしょうか？（ここの情報だけはわからない） 売上高がしっかり上がっているのでまだまだグロースしていると評価しても良いのではないでしょうか。
+PER PBR, 配当利回り 2020/6/5(金)時点でのPER、PBR、配当利回りを書きます。
+ PER: 26.</description>
+    </item>
     
     <item>
       <title>韓国(ソウル近傍)旅行記 トラブルメーカー編</title>
